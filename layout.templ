@@ -1,0 +1,83 @@
+package main
+
+templ layout(foot, count,dropdown , stencil templ.Component) {
+    <html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title> dev</title>
+    <script src="https://unpkg.com/htmx.org@1.9.6" integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.1/dist/cdn.min.js"></script>
+    <script type="module" src="http://localhost:3333/build/tmplhtmx.esm.js" data-stencil></script>
+    <script nomodule="" src="http://localhost:3333/build/tmplhtmx.js" data-stencil></script>
+  </head>
+  <body>
+{! count}
+{! stencil}
+{! dropdown}
+        {! foot}
+
+  </body>
+</html>
+}
+
+
+
+
+templ component() {
+    <my-component></my-component>
+
+}
+
+templ button() {
+<div x-data="counter">
+    <button @click="increment">Increment</button>
+ 
+    <span x-text="count"></span>
+</div>
+
+<script>
+  //import Alpine from `alpinejs`
+  Alpine.data('counter', () => ({
+    count: 1,
+ 
+    increment() { this.count++ }
+}))
+
+  </script>
+    }
+
+
+templ dropdown() {
+
+
+<div x-data="dropdown">
+    <button @click="toggle">Dropdown</button>
+ 
+    <div x-show="open">Dropdown.</div>
+</div>
+ 
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('dropdown', () => ({
+            open: false,
+ 
+            toggle() {
+                this.open = ! this.open
+            }
+        }))
+    })
+</script>
+
+
+    }
+
+
+
+templ foot() {
+    <div></div>
+}
+
+
+
+
