@@ -1,83 +1,86 @@
 package main
 
-templ layout(foot, count,dropdown , stencil templ.Component) {
-    <html lang="en-US">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title> dev</title>
-    <script src="https://unpkg.com/htmx.org@1.9.6" integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.1/dist/cdn.min.js"></script>
-    <script type="module" src="http://localhost:3333/build/tmplhtmx.esm.js" data-stencil></script>
-    <script nomodule="" src="http://localhost:3333/build/tmplhtmx.js" data-stencil></script>
-  </head>
-  <body>
-{! count}
-{! stencil}
-{! dropdown}
-        {! foot}
+templ layout(head,grid, foot templ.Component) {
+<html lang="en-US">
 
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title> dev</title>
+  <script src="https://unpkg.com/htmx.org@1.9.6"
+    integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni"
+    crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.1/dist/cdn.min.js"></script>
+  <script type="module" src="http://localhost:3333/build/tmplhtmx.esm.js" data-stencil></script>
+  <script nomodule="" src="http://localhost:3333/build/tmplhtmx.js" data-stencil></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module">
+    import {
+      Grid,
+      html
+    } from "https://unpkg.com/gridjs?module";
+  </script>
+
+</head>
+
+<body>
+  @head
+  @grid
+  @foot
+</body>
+
 </html>
 }
 
-
-
-
-templ component() {
-    <my-component></my-component>
-
+templ head() {
+<div>
+  <h1 class="text-3xl font-bold underline">
+    Dev
+  </h1>
+</div>
 }
-
-templ button() {
-<div x-data="counter">
-    <button @click="increment">Increment</button>
- 
-    <span x-text="count"></span>
-</div>
-
-<script>
-  //import Alpine from `alpinejs`
-  Alpine.data('counter', () => ({
-    count: 1,
- 
-    increment() { this.count++ }
-}))
-
-  </script>
-    }
-
-
-templ dropdown() {
-
-
-<div x-data="dropdown">
-    <button @click="toggle">Dropdown</button>
- 
-    <div x-show="open">Dropdown.</div>
-</div>
- 
-<script>
-    document.addEventListener('alpine:init', () => {
-        Alpine.data('dropdown', () => ({
-            open: false,
- 
-            toggle() {
-                this.open = ! this.open
-            }
-        }))
-    })
-</script>
-
-
-    }
-
-
 
 templ foot() {
-    <div></div>
+<div>
+  <h1 class="text-3xl font-bold underline">
+    Made with ❤️ in Neovim
+  </h1>
+</div>
 }
 
 
+templ grid(pkgs []Package) {
+<div>
+  <table class="text-left w-full">
 
 
+    <thead class="bg-black flex text-white w-full">
+      <tr class="flex w-full mb-4">
+        <th class="p-4 w-1/4">
+          Name
+        </th>
+        <th class="p-4 w-1/4">
+
+          Version
+        </th>
+      </tr>
+    </thead>
+    <tbody class="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll w-full"
+      style="height: 50vh;">
+
+      for _,item := range pkgs {
+      <tr class="flex w-full mb-4">
+
+        <td class="p-4 w-1/4">
+          { item.name }
+        </td>
+        <td class="p-4 w-1/4">
+          { item.version }
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+}
